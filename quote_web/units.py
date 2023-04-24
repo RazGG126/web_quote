@@ -28,14 +28,14 @@ def send_reset_email(user):
 
 def add_default_profile_image(user):
     img_name = config.DEFAULT_USER_PROFILE
-    full_path = os.path.join(os.getcwd(), 'quote_web\\static', 'profiles_pics', str(user.id))
+    full_path = os.path.join(os.getcwd(), 'quote_web/static', 'profiles_pics', str(user.id))
     if not os.path.exists(full_path):
         os.mkdir(full_path)
-        full_path += '\\profile_images'
+        full_path += '/profile_images'
         os.mkdir(full_path)
     else:
-        full_path += '\\profile_images'
-    shutil.copy(f'{os.getcwd()}\\quote_web\\static\\profiles_pics\\{img_name}', full_path)
+        full_path += '/profile_images'
+    shutil.copy(f'{os.getcwd()}/quote_web/static/profiles_pics/{img_name}', full_path)
     return img_name
 
 
