@@ -1,0 +1,78 @@
+{% extends "base.html" %}
+
+{% block nav %}
+    <li><a class="navig nav-link fw-bold py-1 px-0" aria-current="page" href="/">Главная</a></li>
+    <li><a class="navig nav-link fw-bold py-1 px-0 active" href="/settings">Настройки</a></li>
+    {% if current_user.is_authenticated %}
+        <li><a class="navig nav-link fw-bold py-1 px-0 " href="/profile/{{current_user.id}}"><i class="fa-regular fa-user fa-sm"></i> {{ current_user.nick_name }}</a></li>
+    {% else %}
+        <li><a class="navig nav-link fw-bold py-1 px-0" href="/sign-in"><i class="fa-regular fa-user fa-sm"></i> Войти</a></li>
+    {% endif %}
+{% endblock %}
+
+
+{% block content %}
+    {% for category, msg in get_flashed_messages(True) %}
+    <p class="flash {{category}} mt-5" role="alert">{{msg}}</p>
+    {% endfor %}
+    <form class="form-signin mb-5 mt-5" method="post">
+        {{ form_nick_name.hidden_tag() }}
+        <h1 class="h2 mb-3 font-weight-normal">Смена имени пользователя</h1>
+        <p class='lead'>Введите новый никнейм, который будут видеть другие пользователи</p>
+        <div class="row justify-content-center"><label class="lb mb-1 col-12  col-sm-6 col-md-6 col-lg-6 col-xl-6">{{ form_nick_name.nick_name.label }}</label></div>
+        <div class="row justify-content-center">
+            {{ form_nick_name.nick_name(class="form-input-reg-log mb-3 col-12 col-sm-6 col-md-6 col-lg-6 col-xl-6", placeholder="Введите никнейм") }}
+        </div>
+        {{ form_nick_name.submit(type="submit", class="hv-btn btn btn-lg btn-light fw-bold border-white mb-3") }}<br>
+    </form>
+    <form class="form-signin mb-5" method="post">
+        {{ form_new_password.hidden_tag() }}
+        <h1 class="h2 mb-3 font-weight-normal">Смена пароля</h1>
+        <p class='lead'>Введите новый пароль, который будете использовать при входе</p>
+        <div class="row justify-content-center"><label class="lb mb-1 col-12  col-sm-6 col-md-6 col-lg-6 col-xl-6">{{ form_new_password.password.label }}</label></div>
+        <div class="row justify-content-center">
+            {{ form_new_password.password(class="form-input-reg-log mb-3 col-12 col-sm-6 col-md-6 col-lg-6 col-xl-6", placeholder="Введите пароль", type="password") }}
+        </div>
+        <div class="row justify-content-center"><label class="lb mb-1 col-12  col-sm-6 col-md-6 col-lg-6 col-xl-6">{{ form_new_password.password_new.label }}</label></div>
+        <div class="row justify-content-center">
+            {{ form_new_password.password_new(class="form-input-reg-log mb-3 col-12 col-sm-6 col-md-6 col-lg-6 col-xl-6", placeholder="Введите пароль", type="password") }}
+        </div>
+        {{ form_new_password.submit(type="submit", class="hv-btn btn btn-lg btn-light fw-bold border-white mb-3") }}<br>
+    </form>
+    <form class="form-signin mb-5" method="post" enctype="multipart/form-data" novalidate>
+        {{ form_nick_name.hidden_tag() }}
+        <h1 class="h2 mb-3 font-weight-normal">Смена фото профиля</h1>
+        <p class='lead'>Загрузите фото профиля, которое будут видеть другие пользователи</p>
+        <div class="row justify-content-center"><label class="lb mb-1 col-12  col-sm-6 col-md-6 col-lg-6 col-xl-6">{{ form_profile_photo.photo.label }}</label></div>
+        <div class="row justify-content-center">
+            {{ form_profile_photo.photo(class="form-input-reg-log mb-3 col-12 col-sm-6 col-md-6 col-lg-6 col-xl-6") }}
+            {% for error in form_profile_photo.photo.errors %}
+                <div class="flash error mb-3" role="alert">
+                    {{ error }}
+                </div>
+            {% endfor %}
+        </div>
+        {{ form_profile_photo.submit(type="submit", class="hv-btn btn btn-lg btn-light fw-bold border-white mb-3") }}<br>
+        <p>или <a class="text_link" href="/delete_profile_img">удалите</a> фото</p>
+    </form>
+    <form class="form-signin mb-5 mt-5" method="post">
+        {{ form_change_blob_color.hidden_tag() }}
+        <h1 class="h2 mb-3 font-weight-normal">Смена цвета BLOB</h1>
+        <p class='lead'>Blob - то, что является задним фоном под вашей основной инфомацией в профиле</p>
+        <div class="row justify-content-center"><label class="lb mb-1 col-12  col-sm-6 col-md-6 col-lg-6 col-xl-6">{{ form_change_blob_color.first_color.label }}</label></div>
+        <div class="row justify-content-center">
+            {{ form_change_blob_color.first_color(class="form-input-reg-log mb-3 col-12 col-sm-6 col-md-6 col-lg-6 col-xl-6", placeholder="hex-color без #") }}
+        </div>
+        <div class="row justify-content-center"><label class="lb mb-1 col-12  col-sm-6 col-md-6 col-lg-6 col-xl-6">{{ form_change_blob_color.second_color.label }}</label></div>
+        <div class="row justify-content-center">
+            {{ form_change_blob_color.second_color(class="form-input-reg-log mb-3 col-12 col-sm-6 col-md-6 col-lg-6 col-xl-6", placeholder="hex-color без #") }}
+        </div>
+        {{ form_change_blob_color.submit(type="submit", class="hv-btn btn btn-lg btn-light fw-bold border-white mb-3") }}<br>
+        <p><a class="text_link" href="/reset_blob_color">вернуть</a> стандартный цвет</p>
+    </form>
+
+
+
+
+
+{% endblock %}

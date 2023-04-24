@@ -1,0 +1,89 @@
+{% extends "base.html" %}
+
+{% block nav %}
+    <li><a class="navig nav-link fw-bold py-1 px-0 active" aria-current="page" href="/">Главная</a></li>
+    <li><a class="navig nav-link fw-bold py-1 px-0" href="/about">О нас</a></li>
+    {% if current_user.is_authenticated %}
+        <li><a class="navig nav-link fw-bold py-1 px-0" href="/sign-out"><i class="fa-regular fa-user fa-sm"></i> {{ current_user.nick_name }}</a></li>
+    {% else %}
+        <li><a class="navig nav-link fw-bold py-1 px-0" href="/sign-in"><i class="fa-regular fa-user fa-sm"></i> Войти</a></li>
+    {% endif %}
+{% endblock %}
+
+{% block content %}
+    <div class="head-title">
+        <h1>Цитаты.</h1>
+        <p class="lead">Последние цитаты на сайте.</p>
+    </div>
+    <div class="btn-add-quote">
+        <a class="btn-custom" href="#"><span>Добавить цитату</span><i></i></a>
+    </div>
+    <div class="quote row">
+        <div class="quote-content col-12 col-sm-8 col-md-9 col-lg-9">
+            <h3 class="quote-text">&#10077;Стремитесь не к успеху, а к ценностям, которые он дает&#10078;</h3>
+            <p class="fw-light">Альберт Эйнштейн</p>
+        </div>
+        <div class="author-quote col-12 col-sm-4 col-md-3 col-lg-3">
+            <h4 class="text-center">RazGG126</h4>
+            <div class="indicators">
+                <p class="indicator-left"><i class="fa-regular fa-comment" style="color: #ffa50a;"></i> 99999</p>
+                <p class="indicator-right"><i class="fa-regular fa-heart" style="color: #ffa50a;"></i> 99999</p>
+            </div>
+        </div>
+    </div>
+    <div class="quote row">
+        <div class="quote-content col-12 col-sm-8 col-md-9 col-lg-9">
+            <h3 class="quote-text">&#10077;За свою карьеру я пропустил более 9000 бросков, проиграл почти 300 игр. 26 раз мне доверяли сделать финальный победный бросок, и я промахивался. Я терпел поражения снова, и снова, и снова. И именно поэтому я добился успеха.&#10078;</h3>
+            <p class="fw-light">Майкл Джордан</p>
+        </div>
+        <div class="author-quote col-12 col-sm-4 col-md-3 col-lg-3">
+            <h4 class="text-center">Silent8_</h4>
+            <div class="indicators">
+                <p class="indicator-left"><i class="fa-regular fa-comment" style="color: #ffa50a;"></i> 72</p>
+                <p class="indicator-right"><i class="fa-regular fa-heart" style="color: #ffa50a;"></i> 23</p>
+            </div>
+        </div>
+    </div>
+    <div class="quote row">
+        <div class="quote-content col-12 col-sm-8 col-md-9 col-lg-9">
+            <h3 class="quote-text">&#10077;Надо любить жизнь больше, чем смысл жизни.&#10078;</h3>
+            <p class="fw-light">Федор Достоевский</p>
+        </div>
+        <div class="author-quote col-12 col-sm-4 col-md-3 col-lg-3">
+            <h4 class="text-center">TiKoR</h4>
+            <div class="indicators">
+                <p class="indicator-left"><i class="fa-regular fa-comment" style="color: #ffa50a;"></i> 48</p>
+                <p class="indicator-right"><i class="fa-regular fa-heart" style="color: #ffa50a;"></i> 15</p>
+            </div>
+        </div>
+    </div>
+    <div class="quote row">
+        <div class="quote-content col-12 col-sm-8 col-md-9 col-lg-9">
+            <h3 class="quote-text">&#10077;Если вы думаете, что на что-то способны, вы правы; если думаете, что у вас ничего не получится - вы тоже правы.&#10078;</h3>
+            <p class="fw-light">Генри Форд</p>
+        </div>
+        <div class="author-quote col-12 col-sm-4 col-md-3 col-lg-3">
+            <h4 class="text-center">User9234</h4>
+            <div class="indicators">
+                <p class="indicator-left"><i class="fa-regular fa-comment" style="color: #ffa50a;"></i> 26</p>
+                <p class="indicator-right"><i class="fa-regular fa-heart" style="color: #ffa50a;"></i> 4</p>
+            </div>
+        </div>
+    </div>
+    <div class="quote row">
+        <div class="quote-content col-12 col-sm-8 col-md-9 col-lg-9">
+            <h3 class="quote-text">&#10077;Все дело в мыслях. Мысль — начало всего. И мыслями можно управлять. И поэтому главное дело совершенствования: работать над мыслями.&#10078;</h3>
+            <p class="fw-light">Лев Толстой</p>
+        </div>
+        <div class="author-quote col-12 col-sm-4 col-md-3 col-lg-3">
+            <h4 class="author-quote-text text-center">Max_Grishin</h4>
+            <div class="indicators">
+                <p class="indicator-left"><i class="fa-regular fa-comment" style="color: #ffa50a;"></i> 113</p>
+                <p class="indicator-right"><i class="fa-regular fa-heart" style="color: #ffa50a;"></i> 11</p>
+            </div>
+        </div>
+    </div>
+<!--    <p class="lead">-->
+<!--        <a href="#" class="hv-btn btn btn-lg btn-light fw-bold border-white">Learn more</a>-->
+<!--    </p>-->
+{% endblock %}

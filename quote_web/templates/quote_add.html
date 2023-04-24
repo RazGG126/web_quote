@@ -1,0 +1,36 @@
+{% extends "base.html" %}
+
+{% block nav %}
+    <li><a class="navig nav-link fw-bold py-1 px-0 active" aria-current="page" href="/">Главная</a></li>
+    <li><a class="navig nav-link fw-bold py-1 px-0" href="/settings">Настройки</a></li>
+    {% if current_user.is_authenticated %}
+        <li><a class="navig nav-link fw-bold py-1 px-0" href="/profile"><i class="fa-regular fa-user fa-sm"></i> {{ current_user.nick_name }}</a></li>
+    {% else %}
+        <li><a class="navig nav-link fw-bold py-1 px-0" href="/sign-in"><i class="fa-regular fa-user fa-sm"></i> Войти</a></li>
+    {% endif %}
+{% endblock %}
+
+{% block content %}
+<form action="" method="post">
+    {{ form.hidden_tag() }}
+    <h1 class="h2 mb-5 font-weight-normal">Новая цитата</h1>
+    <div class="row justify-content-center"><label class="lb mb-1 col-12  col-sm-6 col-md-6 col-lg-6 col-xl-6">{{ form.author.label }}</label></div>
+    <div class="row justify-content-center">
+        {{ form.author(class="form-input-reg-log mb-3 col-12 col-sm-6 col-md-6 col-lg-6 col-xl-6", placeholder="Введите автора цитаты") }}
+        {% for error in form.author.errors %}
+            <p class="alert-reg mb-2" role="alert">{{error}}</p>
+        {% endfor %}
+    </div>
+    <div class="row justify-content-center"><label class="lb mb-1 col-12  col-sm-6 col-md-6 col-lg-6 col-xl-6">{{ form.content.label }}</label></div>
+    <div class="row justify-content-center">
+        {{ form.content(class="form-input-reg-log mb-3 col-12 col-sm-6 col-md-6 col-lg-6 col-xl-6", placeholder="Введите цитату") }}
+        {% for error in form.content.errors %}
+            <p class="alert-reg mb-2" role="alert">{{error}}</p>
+        {% endfor %}
+    </div>
+    {{ form.submit(type="submit", class="hv-btn btn btn-lg btn-light fw-bold border-white mb-3") }}<br>
+    {% for category, msg in get_flashed_messages(True) %}
+            <p class="flash {{category}} mb-2" role="alert">{{msg}}</p>
+    {% endfor %}
+</form>
+{% endblock %}

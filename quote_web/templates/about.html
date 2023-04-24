@@ -1,0 +1,44 @@
+{% extends "base.html" %}
+
+{% block nav %}
+    <li><a class="navig nav-link fw-bold py-1 px-0" aria-current="page" href="/">Главная</a></li>
+    <li><a class="navig nav-link fw-bold py-1 px-0" href="/about">О нас</a></li>
+    {% if current_user.is_authenticated %}
+        <li><a class="navig nav-link fw-bold py-1 px-0" href="/sign-out"><i class="fa-regular fa-user fa-sm"></i> {{ current_user.nick_name }}</a></li>
+    {% else %}
+        <li><a class="navig nav-link fw-bold py-1 px-0" href="/sign-in"><i class="fa-regular fa-user fa-sm"></i> Войти</a></li>
+    {% endif %}
+{% endblock %}
+
+
+{% block content %}
+    <div class="head-title">
+        <h1>Цитата.</h1>
+    </div>
+    <div class="quote-alone row">
+        <div class="col-12 col-sm-8 col-md-9 col-lg-9">
+            <h3 class="quote-text-h3">&#10077;Стремитесь не к успеху, а к ценностям, которые он дает&#10078;</h3>
+            <p class="fw-light">Альберт Эйнштейн</p>
+        </div>
+        <div class="author-quote col-12 col-sm-4 col-md-3 col-lg-3">
+            <h4 class="text-center">RazGG126</h4>
+            <div class="indicators">
+                <p class="indicator-left"><i class="fa-regular fa-comment" style="color: #ffa50a;"></i> 99999</p>
+                <p class="indicator-right"><i class="fa-regular fa-heart" style="color: #ffa50a;"></i> 99999</p>
+            </div>
+        </div>
+    </div>
+    <form action="" method="post">
+        <div class="row justify-content-around">
+            <div class="col-12 col-sm-8 col-md-9 col-lg-9">
+                <input class="form-input-сomment-add mb-3 w-100", placeholder="Введите комментарий">
+            </div>
+            <div class="col-12 col-sm-4 col-md-3 col-lg-3 mb-5 justify-content-center align-items-center">
+                <div>
+                    <input class="send-icon" type="submit">
+                </div>
+            </div>
+        </div>
+    </form>
+
+{% endblock %}

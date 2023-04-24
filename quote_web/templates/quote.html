@@ -1,0 +1,103 @@
+{% extends "base.html" %}
+
+{% block nav %}
+    <li><a class="navig nav-link fw-bold py-1 px-0" aria-current="page" href="/">Главная</a></li>
+    {% if current_user.is_authenticated %}
+        <li><a class="navig nav-link fw-bold py-1 px-0" href="/settings">Настройки</a></li>
+    {% else %}
+        <li><a class="navig nav-link fw-bold py-1 px-0" href="/sign-in">Настройки</a></li>
+    {% endif %}
+    {% if current_user.is_authenticated %}
+        <li><a class="navig nav-link fw-bold py-1 px-0" href="/profile/{{current_user.id}}"><i class="fa-regular fa-user fa-sm"></i> {{ current_user.nick_name }}</a></li>
+    {% else %}
+        <li><a class="navig nav-link fw-bold py-1 px-0" href="/sign-in"><i class="fa-regular fa-user fa-sm"></i> Войти</a></li>
+    {% endif %}
+{% endblock %}
+
+
+{% block content %}
+    <div class="head-title">
+        <h1>Цитата.</h1>
+    </div>
+    <div class="quote-alone row">
+        {% if current_user.id == quote.user.id %}
+            <a class="delete" href="/quotes/delete/{{quote.id}}/1"><i class="fa-solid fa-xmark fa-lg" style="color: #ff0000;"></i></a>
+        {% endif %}
+        <div class="col-12 col-sm-8 col-md-9 col-lg-9">
+            <h3 class="text-h3">&#10077;{{quote.content}}&#10078;</h3>
+            <div class="row">
+                <div class="col-6 text-start">
+                    <p class="fw-light">{{quote.author}}</p>
+                </div>
+                <div class="col-6 text-end">
+                    <p class="fw-light">{{quote.created_date.strftime('%Y.%m.%d %H:%M')}}</p>
+                </div>
+            </div>
+        </div>
+        <div class="author-quote col-12 col-sm-4 col-md-3 col-lg-3">
+            <h4 class="text-center"><a class="author-link-text-quote" href="/profile/{{quote.user.id}}">{{quote.user.nick_name}}</a></h4>
+            <div class="indicators">
+                <p class="indicator-left"><i class="fa-regular fa-comment" style="color: #ffa50a;"></i> {{quote.comments_number}}</p>
+                {% if current_user.id in quote.likes|map(attribute="user_id")|list %}
+                    <p class="indicator-right"><i class="fa-solid fa-heart" id="like-button-{{quote.id}}" onclick="like({{quote.id}})" style="color: #ffa50a;"></i> <span id="likes-count-{{quote.id}}">{{quote.likes_number}}</span></p>
+                {% else %}
+                    <p class="indicator-right"><i class="fa-regular fa-heart" id="like-button-{{quote.id}}" onclick="like({{quote.id}})" style="color: #ffa50a;"></i> <span id="likes-count-{{quote.id}}">{{quote.likes_number}}</span></p>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+    <div class="row mb-4">
+        <h3 class="comment_text">Комментарии к цитате - {{quote.comments_number}}</h3>
+    </div>
+    {% if quote.comments_number == 0 %}
+        <div class="no-quote">
+            <p class="lead">Комментариев ещё нет.</p>
+        </div>
+    {% else %}
+        <div class="comments_content justify-content-center">
+            <div class="item_comments row">
+                {% for comment in comments%}
+                    <div class="comment col-12 row">
+                        {% if current_user.id == comment.user.id %}
+                            <a class="delete" href="/quotes/comments/delete/{{comment.id}}"><i class="fa-solid fa-xmark fa-lg" style="color: #ff0000;"></i></a>
+                        {% endif %}
+                        <div class="author-quote col-12 col-sm-4 col-md-3 col-lg-3">
+                            <div>
+                                <img class="profile_img mb-2" src="{{url_for('static', filename='profiles_pics/' + comment.user.id|string + '/profile_images/' + comment.user.user_photo)}}">
+                                <h4 class="text-center"><a  class="author-link-text-comment" href="/profile/{{comment.user.id}}">{{comment.user.nick_name}}</a></h4>
+                            </div>
+                            <div class="row">
+                                <p class="text-center date">{{comment.created_date.strftime('%Y.%m.%d %H:%M')}}</p>
+                            </div>
+                        </div>
+                        <div class="col-12 col-sm-8 col-md-9 col-lg-9">
+                            <p class="text-center">{{comment.content}}</p>
+                        </div>
+                    </div>
+                {% endfor %}
+            </div>
+        </div>
+    {% endif %}
+    {% if current_user.is_authenticated %}
+        <form action="" method="post">
+            {{ form.hidden_tag() }}
+            <div class="row justify-content-around">
+                <div class="col-12 col-sm-8 col-md-9 col-lg-9">
+                    {{ form.comment(class="form-input-сomment-add mb-3 w-100", placeholder="Введите комментарий") }}
+                    {% for error in form.comment.errors %}
+                        <div class="alert alert-danger" role="alert">
+                            {{ error }}
+                        </div>
+                    {% endfor %}
+                </div>
+                <div class="col-12 col-sm-4 col-md-3 col-lg-3 mb-5 justify-content-center align-items-center">
+                    {{ form.submit(type="submit", class="send-button") }}
+                </div>
+            </div>
+        </form>
+    {% else %}
+        <div class="row mb-5">
+            <h4>Авторизуйтесь, чтобы оставить комментарий</h4>
+        </div>
+    {% endif %}
+{% endblock %}

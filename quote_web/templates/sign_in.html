@@ -1,0 +1,48 @@
+{% extends "base.html" %}
+
+{% block nav %}
+    <li><a class="navig nav-link fw-bold py-1 px-0" aria-current="page" href="/">Главная</a></li>
+    {% if current_user.is_authenticated %}
+        <li><a class="navig nav-link fw-bold py-1 px-0" href="/settings">Настройки</a></li>
+    {% else %}
+        <li><a class="navig nav-link fw-bold py-1 px-0" href="/sign-in">Настройки</a></li>
+    {% endif %}
+    <li><a class="navig nav-link fw-bold py-1 px-0 active" href="/sign-in"><i class="fa-regular fa-user fa-sm"></i> Войти</a></li>
+{% endblock %}
+
+
+{% block content %}
+    <form class="form-signin" method="post">
+        {{ form.hidden_tag() }}
+        {% for category, msg in get_flashed_messages(True) %}
+            <p class="flash {{category}} mb-2" role="alert">{{msg}}</p>
+        {% endfor %}
+        <h1 class="h2 mb-5 font-weight-normal">Вход в профиль</h1>
+        <div class="row justify-content-center"><label class="lb mb-1 col-12  col-sm-6 col-md-6 col-lg-6 col-xl-6">{{ form.email.label }}</label></div>
+        <div class="row justify-content-center">
+            {{ form.email(class="form-input-reg-log mb-3 col-12 col-sm-6 col-md-6 col-lg-6 col-xl-6", placeholder="Введите электронную почту", type="email") }}
+            {% for error in form.email.errors %}
+                <div class="alert alert-danger" role="alert">
+                    {{ error }}
+                </div>
+            {% endfor %}
+        </div>
+        <div class="row justify-content-center"><label class="lb mb-1 col-12  col-sm-6 col-md-6 col-lg-6 col-xl-6">{{ form.password.label }}</label></div>
+        <div class="row justify-content-center">
+            {{ form.password(class="form-input-reg-log mb-5 col-12 col-sm-6 col-md-6 col-lg-6 col-xl-6", placeholder="Введите пароль", type="password") }}
+            {% for error in form.password.errors %}
+                <div class="alert alert-danger" role="alert">
+                    {{ error }}
+                </div>
+            {% endfor %}
+        </div>
+        <div class="checkbox mb-3">
+            <label>
+                 {{ form.remember_me() }} {{ form.remember_me.label }}
+            </label>
+        </div>
+        {{ form.submit(type="submit", class="hv-btn btn btn-lg btn-light fw-bold border-white mb-3") }}<br>
+    </form>
+<p>Нет аккаунта? <a class="text_link" href="/register">Зарегистрироваться</a></p>
+<p>Забыли пароль? <a class="text_link" href="/reset_password">Сбросить пароль</a></p>
+{% endblock %}

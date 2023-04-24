@@ -1,0 +1,140 @@
+{% extends "base.html" %}
+
+{% block nav %}
+    <li><a class="navig nav-link fw-bold py-1 px-0" aria-current="page" href="/">Главная</a></li>
+    {% if current_user.is_authenticated %}
+        <li><a class="navig nav-link fw-bold py-1 px-0" href="/settings">Настройки</a></li>
+    {% else %}
+        <li><a class="navig nav-link fw-bold py-1 px-0" href="/sign-in">Настройки</a></li>
+    {% endif %}
+    {% if current_user.is_authenticated %}
+        <li><a class="navig nav-link fw-bold py-1 px-0 active" href="/profile/{{current_user.id}}"><i class="fa-regular fa-user fa-sm"></i> {{ current_user.nick_name }}</a></li>
+    {% else %}
+        <li><a class="navig nav-link fw-bold py-1 px-0" href="/sign-in"><i class="fa-regular fa-user fa-sm"></i> Войти</a></li>
+    {% endif %}
+{% endblock %}
+
+
+{% block content %}
+    <div class="container">
+        <div class="profile_main">
+            <div class="about">
+                <div class="col-12 mb-2"><img class="profile_img" src="{{url_for('static', filename='profiles_pics/' + user.id|string + '/profile_images/' + user.user_photo)}}"></div>
+                <div class="col-12"><h2 class="nick_name_profile">{{user.nick_name}}</h2></div>
+                <div class="row justify-content-center">
+                    <p class="fw-light">{{user.name}} {{user.surname}}</p>
+                </div>
+                <div class="col-12"><p class="lead-date">на сайте с {{user.created_date.strftime('%Y.%m.%d')}}</p></div>
+                <div class="row justify-content-center mb-3">
+                    <div class="col-3 text-end">
+                        <p class="fw-light-score">Число <i class="fa-regular fa-comment" style="color: #ffa50a;"></i> {{user.comments|length}}</p>
+                    </div>
+                    <div class="col-3 text-start">
+                        <p class="fw-light-score">Число <i class="fa-regular fa-heart profile" style="color: #ffa50a;"></i> {{user.likes|length}}</p>
+                    </div>
+                </div>
+            </div>
+            <div class="blob">
+                <svg class="svg_blob" viewBox="0 0 500 500" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" id="blobSvg">
+                    <defs>
+                      <linearGradient id="gradient" x1="0%" y1="0%" x2="0%" y2="100%">
+                        <stop offset="0%" style="stop-color: #{{user.first_blob_color}};"></stop>
+                        <stop offset="100%" style="stop-color: #{{user.second_blob_color}};"></stop>
+                      </linearGradient>
+                    </defs>
+                     <path fill="url(#gradient)">>
+                         <animate attributeName="d" dur="5000ms" repeatCount="indefinite"
+
+                         values="M460.5,294Q461,338,430,368.5Q399,399,367,426.5Q335,454,292.5,473Q250,492,211.5,464.5Q173,437,139,416Q105,395,74.5,365Q44,335,31,292.5Q18,250,38,210Q58,170,68.5,124.5Q79,79,118.5,54Q158,29,204,21Q250,13,296,20.5Q342,28,368,67Q394,106,431.5,132.5Q469,159,464.5,204.5Q460,250,460.5,294Z;
+                         M473,295.5Q471,341,434,369Q397,397,362.5,418Q328,439,289,461.5Q250,484,202.5,481.5Q155,479,131,436Q107,393,72.5,365.5Q38,338,31.5,294Q25,250,27,204Q29,158,68,132.5Q107,107,133.5,69.5Q160,32,205,31.5Q250,31,291.5,40.5Q333,50,377.5,64Q422,78,441,120.5Q460,163,467.5,206.5Q475,250,473,295.5Z;
+                         M458.5,288.5Q437,327,430.5,375.5Q424,424,380.5,442Q337,460,293.5,471Q250,482,207,470.5Q164,459,121.5,440Q79,421,66,376.5Q53,332,49,291Q45,250,41.5,206Q38,162,64,126Q90,90,122.5,55Q155,20,202.5,34.5Q250,49,295.5,39.5Q341,30,372,63.5Q403,97,422,134Q441,171,460.5,210.5Q480,250,458.5,288.5Z;
+                         M472.5,297Q478,344,449.5,382.5Q421,421,374.5,429.5Q328,438,289,459Q250,480,210.5,460.5Q171,441,138.5,417.5Q106,394,72,366Q38,338,39,294Q40,250,41,207Q42,164,59.5,120.5Q77,77,121,61Q165,45,207.5,23Q250,1,290.5,28Q331,55,361.5,81.5Q392,108,420,138Q448,168,457.5,209Q467,250,472.5,297Z;
+                         M465,291.5Q451,333,432.5,373.5Q414,414,378.5,444Q343,474,296.5,464Q250,454,205,460.5Q160,467,125,438.5Q90,410,60.5,375.5Q31,341,20,295.5Q9,250,32,209.5Q55,169,77.5,134.5Q100,100,127.5,60Q155,20,202.5,23Q250,26,294,31Q338,36,380.5,56.5Q423,77,433.5,123.5Q444,170,461.5,210Q479,250,465,291.5Z;
+                         M460.5,294Q461,338,430,368.5Q399,399,367,426.5Q335,454,292.5,473Q250,492,211.5,464.5Q173,437,139,416Q105,395,74.5,365Q44,335,31,292.5Q18,250,38,210Q58,170,68.5,124.5Q79,79,118.5,54Q158,29,204,21Q250,13,296,20.5Q342,28,368,67Q394,106,431.5,132.5Q469,159,464.5,204.5Q460,250,460.5,294Z;">
+
+                         </animate>
+                     </path>
+                </svg>
+            </div>
+            <div class="blob2">
+                <svg class="svg_blob" viewBox="0 0 500 500" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" id="blobSvg">
+                        <defs>
+                         <linearGradient id="gradient" x1="0%" y1="0%" x2="0%" y2="100%">
+                           <stop offset="0%" style="stop-color: #{{user.first_blob_color}};"></stop>
+                           <stop offset="100%" style="stop-color: #{{user.second_blob_color}};"></stop>
+                         </linearGradient>
+                        </defs>
+<!--                     <path fill="url(#gradient)">>-->
+<!--                         <animate attributeName="d" dur="5000ms" repeatCount="indefinite"-->
+
+<!--                         values="M473.08901,300.55573Q460.27992,351.11147,428.1738,392.07017Q396.06767,433.02887,349.5701,457.09863Q303.07254,481.16838,249.97998,481.2984Q196.88742,481.42842,148.15296,460.47347Q99.4185,439.51851,71.00936,394.61549Q42.60022,349.71247,25.18315,299.85624Q7.76609,250,24.15148,199.39069Q40.53688,148.78138,72.90939,108.58977Q105.2819,68.39816,152.14249,47.14083Q199.00307,25.8835,250.52553,24.3318Q302.04799,22.7801,350.71798,42.63876Q399.38798,62.49741,433.9316,103.61884Q468.47523,144.74026,477.18666,197.37013Q485.8981,250,473.08901,300.55573Z;-->
+<!--                         M479.26524,303.64635Q472.58539,357.29269,437.32015,398.90856Q402.05491,440.52443,353.26221,465.20125Q304.46952,489.87808,249.82317,489.99697Q195.17683,490.11587,151.17683,459.88111Q107.17683,429.64635,70.67683,391.82317Q34.17683,354,18.56096,302Q2.94509,250,23.38111,200.29269Q43.81712,150.58539,72.64332,107.02745Q101.46952,63.46952,149.55793,41.52745Q197.64635,19.58539,250.96952,15.14937Q304.29269,10.71336,353.1738,34.68288Q402.05491,58.6524,430.14635,104.47255Q458.23779,150.29269,472.09144,200.14635Q485.94509,250,479.26524,303.64635Z;-->
+<!--                         M480.5,302Q466,354,429.5,391.5Q393,429,347.5,454.5Q302,480,249,483Q196,486,152,457Q108,428,71.5,391Q35,354,23.5,302Q12,250,20.5,197Q29,144,64,102.5Q99,61,147.5,37Q196,13,248.5,20.5Q301,28,347,49.5Q393,71,428.5,109Q464,147,479.5,198.5Q495,250,480.5,302Z;-->
+<!--                         M476,303Q470,356,434.5,396.5Q399,437,352,463Q305,489,250.5,488Q196,487,147,464Q98,441,62.5,399Q27,357,23.5,303.5Q20,250,24,196.5Q28,143,67.5,107Q107,71,152,45.5Q197,20,251,15Q305,10,352,36.5Q399,63,430,105.5Q461,148,471.5,199Q482,250,476,303Z;-->
+<!--                         M473.08901,300.55573Q460.27992,351.11147,428.1738,392.07017Q396.06767,433.02887,349.5701,457.09863Q303.07254,481.16838,249.97998,481.2984Q196.88742,481.42842,148.15296,460.47347Q99.4185,439.51851,71.00936,394.61549Q42.60022,349.71247,25.18315,299.85624Q7.76609,250,24.15148,199.39069Q40.53688,148.78138,72.90939,108.58977Q105.2819,68.39816,152.14249,47.14083Q199.00307,25.8835,250.52553,24.3318Q302.04799,22.7801,350.71798,42.63876Q399.38798,62.49741,433.9316,103.61884Q468.47523,144.74026,477.18666,197.37013Q485.8981,250,473.08901,300.55573Z;">-->
+
+<!--                         </animate>-->
+<!--                     </path>-->
+                     <path fill="url(#gradient)">>
+                         <animate attributeName="d" dur="5000ms" repeatCount="indefinite"
+
+                         values="M460.5,294Q461,338,430,368.5Q399,399,367,426.5Q335,454,292.5,473Q250,492,211.5,464.5Q173,437,139,416Q105,395,74.5,365Q44,335,31,292.5Q18,250,38,210Q58,170,68.5,124.5Q79,79,118.5,54Q158,29,204,21Q250,13,296,20.5Q342,28,368,67Q394,106,431.5,132.5Q469,159,464.5,204.5Q460,250,460.5,294Z;
+                         M473,295.5Q471,341,434,369Q397,397,362.5,418Q328,439,289,461.5Q250,484,202.5,481.5Q155,479,131,436Q107,393,72.5,365.5Q38,338,31.5,294Q25,250,27,204Q29,158,68,132.5Q107,107,133.5,69.5Q160,32,205,31.5Q250,31,291.5,40.5Q333,50,377.5,64Q422,78,441,120.5Q460,163,467.5,206.5Q475,250,473,295.5Z;
+                         M458.5,288.5Q437,327,430.5,375.5Q424,424,380.5,442Q337,460,293.5,471Q250,482,207,470.5Q164,459,121.5,440Q79,421,66,376.5Q53,332,49,291Q45,250,41.5,206Q38,162,64,126Q90,90,122.5,55Q155,20,202.5,34.5Q250,49,295.5,39.5Q341,30,372,63.5Q403,97,422,134Q441,171,460.5,210.5Q480,250,458.5,288.5Z;
+                         M472.5,297Q478,344,449.5,382.5Q421,421,374.5,429.5Q328,438,289,459Q250,480,210.5,460.5Q171,441,138.5,417.5Q106,394,72,366Q38,338,39,294Q40,250,41,207Q42,164,59.5,120.5Q77,77,121,61Q165,45,207.5,23Q250,1,290.5,28Q331,55,361.5,81.5Q392,108,420,138Q448,168,457.5,209Q467,250,472.5,297Z;
+                         M465,291.5Q451,333,432.5,373.5Q414,414,378.5,444Q343,474,296.5,464Q250,454,205,460.5Q160,467,125,438.5Q90,410,60.5,375.5Q31,341,20,295.5Q9,250,32,209.5Q55,169,77.5,134.5Q100,100,127.5,60Q155,20,202.5,23Q250,26,294,31Q338,36,380.5,56.5Q423,77,433.5,123.5Q444,170,461.5,210Q479,250,465,291.5Z;
+                         M460.5,294Q461,338,430,368.5Q399,399,367,426.5Q335,454,292.5,473Q250,492,211.5,464.5Q173,437,139,416Q105,395,74.5,365Q44,335,31,292.5Q18,250,38,210Q58,170,68.5,124.5Q79,79,118.5,54Q158,29,204,21Q250,13,296,20.5Q342,28,368,67Q394,106,431.5,132.5Q469,159,464.5,204.5Q460,250,460.5,294Z;">
+
+                         </animate>
+                     </path>
+                </svg>
+            </div>
+        </div>
+        <div class="setting-profile">
+
+        </div>
+        <div class="row mb-4">
+            {% if current_user.id == user.id %}
+                <h3 class="comment_text text-center">Ваши цитаты - {{user.quotes|length}}:</h3>
+            {% else %}
+                <h3 class="comment_text text-center">Цитаты пользователя - {{user.quotes|length}}:</h3>
+            {% endif %}
+        </div>
+        {% if user.quotes|length == 0 %}
+            <div class="no-quote">
+                <p class="lead">У вас ещё нет цитат.</p>
+            </div>
+        {% else %}
+            <div class="comments_content justify-content-center">
+                <div class="item_comments row">
+                    {% for quote in user.quotes%}
+                        <div class="quote_profile row">
+                            {% if current_user.id == quote.user.id %}
+                                <a class="delete" href="/quotes/delete/{{quote.id}}/0"><i class="fa-solid fa-xmark fa-lg" style="color: #ff0000;"></i></a>
+                            {% endif %}
+                            <div class="quote-content col-12 col-sm-8 col-md-9 col-lg-9">
+                                <a class="quote-text-h3" href="/quote/{{quote.id}}">&#10077;{{quote.content}}&#10078;</a>
+                                <p class="fw-light">{{quote.author}}</p>
+                            </div>
+                            <div class="author-quote col-12 col-sm-4 col-md-3 col-lg-3">
+                                <h4 class="text-center"><a class="author-link-text-quote" href="/profile/{{quote.user.id}}">{{quote.user.nick_name}}</a></h4>
+                                <div class="indicators">
+                                    <p class="indicator-left"><i class="fa-regular fa-comment" style="color: #ffa50a;"></i> {{quote.comments_number}}</p>
+                                    {% if user.id in quote.likes|map(attribute="user_id")|list %}
+                                        <p class="indicator-right"><i class="fa-solid fa-heart" id="like-button-{{quote.id}}" onclick="like({{quote.id}})" style="color: #ffa50a;"></i> <span id="likes-count-{{quote.id}}">{{quote.likes_number}}</span></p>
+                                    {% else %}
+                                        <p class="indicator-right"><i class="fa-regular fa-heart" id="like-button-{{quote.id}}" onclick="like({{quote.id}})" style="color: #ffa50a;"></i> <span id="likes-count-{{quote.id}}">{{quote.likes_number}}</span></p>
+                                    {% endif %}
+                                </div>
+                            </div>
+                        </div>
+                    {% endfor %}
+                </div>
+            </div>
+        {% endif %}
+        {% if current_user.id == user.id %}
+            <p><a class="text_link" href="/sign-out">Выйти</a> из аккаунта</p>
+        {% endif %}
+    </div>
+
+{% endblock %}

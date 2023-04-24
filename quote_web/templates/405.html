@@ -1,0 +1,19 @@
+{% extends "base.html" %}
+
+{% block nav %}
+    <li><a class="navig nav-link fw-bold py-1 px-0" aria-current="page" href="/">Главная</a></li>
+    {% if current_user.is_authenticated %}
+        <li><a class="navig nav-link fw-bold py-1 px-0" href="/settings">Настройки</a></li>
+    {% else %}
+        <li><a class="navig nav-link fw-bold py-1 px-0" href="/sign-in">Настройки</a></li>
+    {% endif %}
+    <li><a class="navig nav-link fw-bold py-1 px-0" href="/sign-in"><i class="fa-regular fa-user fa-sm"></i> Войти</a></li>
+{% endblock %}
+
+
+{% block content %}
+    <div class="container">
+        <h1>Ошибка 405.</h1>
+        <p class="lead">Отказано в доступе.</p>
+    </div>
+{% endblock %}
