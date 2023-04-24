@@ -120,7 +120,7 @@
                                 <h4 class="text-center"><a class="author-link-text-quote" href="/profile/{{quote.user.id}}">{{quote.user.nick_name}}</a></h4>
                                 <div class="indicators">
                                     <p class="indicator-left"><i class="fa-regular fa-comment" style="color: #ffa50a;"></i> {{quote.comments_number}}</p>
-                                    {% if user.id in quote.likes|map(attribute="user_id")|list %}
+                                    {% if current_user.id in quote.likes|map(attribute="user_id")|list %}
                                         <p class="indicator-right"><i class="fa-solid fa-heart" id="like-button-{{quote.id}}" onclick="like({{quote.id}})" style="color: #ffa50a;"></i> <span id="likes-count-{{quote.id}}">{{quote.likes_number}}</span></p>
                                     {% else %}
                                         <p class="indicator-right"><i class="fa-regular fa-heart" id="like-button-{{quote.id}}" onclick="like({{quote.id}})" style="color: #ffa50a;"></i> <span id="likes-count-{{quote.id}}">{{quote.likes_number}}</span></p>
