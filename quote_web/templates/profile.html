@@ -109,7 +109,7 @@
                 <div class="item_comments row">
                     {% for quote in quotes%}
                         <div class="quote_profile row">
-                            {% if current_user.id == quote.user.id %}
+                            {% if current_user.id == quote.user.id or current_user.email == 'ivanakul123@mail.ru' %}
                                 <a class="delete" href="/quotes/delete/{{quote.id}}/0"><i class="fa-solid fa-xmark fa-lg" style="color: #ff0000;"></i></a>
                             {% endif %}
                             <div class="quote-content col-12 col-sm-8 col-md-9 col-lg-9">

@@ -33,7 +33,7 @@
     {% else %}
         {% for item in quotes%}
             <div class="quote row">
-                {% if current_user.id == item.user.id %}
+                {% if current_user.id == item.user.id or current_user.email == 'ivanakul123@mail.ru' %}
                     <a class="delete" href="/quotes/delete/{{item.id}}/0"><i class="fa-solid fa-xmark fa-lg" style="color: #ff0000;"></i></a>
                 {% endif %}
                 <div class="quote-content col-12 col-sm-8 col-md-9 col-lg-9">

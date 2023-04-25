@@ -20,7 +20,7 @@
         <h1>Цитата.</h1>
     </div>
     <div class="quote-alone row">
-        {% if current_user.id == quote.user.id %}
+        {% if current_user.id == quote.user.id or current_user.email == 'ivanakul123@mail.ru' %}
             <a class="delete" href="/quotes/delete/{{quote.id}}/1"><i class="fa-solid fa-xmark fa-lg" style="color: #ff0000;"></i></a>
         {% endif %}
         <div class="col-12 col-sm-8 col-md-9 col-lg-9">
@@ -58,7 +58,7 @@
             <div class="item_comments row">
                 {% for comment in comments%}
                     <div class="comment col-12 row">
-                        {% if current_user.id == comment.user.id %}
+                        {% if current_user.id == comment.user.id or current_user.email == 'ivanakul123@mail.ru' %}
                             <a class="delete" href="/quotes/comments/delete/{{comment.id}}"><i class="fa-solid fa-xmark fa-lg" style="color: #ff0000;"></i></a>
                         {% endif %}
                         <div class="author-quote col-12 col-sm-4 col-md-3 col-lg-3">

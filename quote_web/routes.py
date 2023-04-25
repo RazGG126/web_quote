@@ -294,7 +294,7 @@ def delete_comment(comment_id):
     if not comment:
         return redirect('/')
 
-    if comment.user.id != current_user.id:
+    if comment.user.id != current_user.id and current_user.email != 'ivanakul123@mail.ru':
         return redirect('/')
 
     id = comment.quote_id
@@ -314,7 +314,7 @@ def delete_quote(quote_id, inside):
     if not quote:
         return redirect('/')
 
-    if quote.user.id != current_user.id:
+    if quote.user.id != current_user.id and current_user.email != 'ivanakul123@mail.ru':
         return redirect('/')
 
     db_sess.query(Comment).filter(Comment.quote_id == quote_id).delete()
