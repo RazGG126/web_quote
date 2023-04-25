@@ -234,11 +234,11 @@ def profile(user_id):
 
     db_sess = db_session.create_session()
     user = db_sess.query(User).filter(User.id == user_id).first()
-
+    quotes = db_sess.query(Quote).filter(user.id == Quote.user_id).order_by(Quote.created_date.desc()).all()
     if not user:
         return abort(404)
 
-    return render_template('profile.html', title='Профиль', user=user)
+    return render_template('profile.html', title='Профиль', user=user, quotes=quotes)
 
 
 @app.route('/quote/<int:id>', methods=['GET', 'POST'])
